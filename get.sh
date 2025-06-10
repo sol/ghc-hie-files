@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+
 set -o nounset
 set -o errexit
 set -o pipefail
@@ -6,17 +7,26 @@ set -o pipefail
 repo="sol/ghc-hie-files"
 dest="$HOME/.local/state/ghc-hie-files/"
 
-versions="9.12.2 9.12.1 9.10.2 9.10.1 9.8.4 9.8.3 9.8.2 9.8.1"
+readarray -t versions <<EOF
+9.12.2
+9.12.1
+9.10.2
+9.10.1
+9.8.4
+9.8.3
+9.8.2
+9.8.1
+EOF
 
 usage() {
   echo
   echo "Usage:"
   echo
-  echo "  get.sh <ghc-version>"
+  echo "  bash <(curl -fsSL https://raw.githubusercontent.com/sol/ghc-hie-files/main/get.sh) <ghc-version>"
   echo
   echo "Available versions:"
   echo
-  printf '  %s\n' $versions
+  printf '  %s\n' "${versions[@]}"
   exit 1
 }
 
@@ -27,7 +37,7 @@ if [ $# -ne 1 ]; then
 fi
 
 version="$1"
-if ! grep -Fxq "$version" <<< "$(printf '%s\n' $versions)"; then
+if [[ ! " ${versions[*]} " =~ " $version " ]]; then
   echo
   echo "Error: unknown version $version"
   usage
