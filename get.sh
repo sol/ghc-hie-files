@@ -13,9 +13,6 @@ readarray -t versions <<EOF
 9.10.2
 9.10.1
 9.8.4
-9.8.3
-9.8.2
-9.8.1
 EOF
 
 usage() {
