@@ -19,7 +19,9 @@ usage() {
   echo
   echo "Usage:"
   echo
-  echo "  bash <(curl -fsSL https://raw.githubusercontent.com/sol/ghc-hie-files/main/get.sh) <ghc-version>"
+  echo "  bash <(curl -fsSL https://raw.githubusercontent.com/sol/ghc-hie-files/main/get.sh) [<ghc-version>]"
+  echo
+  echo "If no version is specified, the version reported by \`ghc --numeric-version\` is used."
   echo
   echo "Available versions:"
   echo
@@ -27,13 +29,16 @@ usage() {
   exit 1
 }
 
-if [ $# -ne 1 ]; then
+if [ $# -eq 0 ]; then
+  version="$(ghc --numeric-version)"
+elif [ $# -eq 1 ]; then
+  version="$1"
+else
   echo
-  echo "Error: missing version"
+  echo "Error: too many arguments"
   usage
 fi
 
-version="$1"
 if [[ ! " ${versions[*]} " =~ " $version " ]]; then
   echo
   echo "Error: unknown version $version"
