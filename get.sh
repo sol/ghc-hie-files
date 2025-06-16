@@ -7,25 +7,26 @@ set -o pipefail
 repo="sol/ghc-hie-files"
 dest="$HOME/.local/state/ghc-hie-files/"
 
-readarray -t versions <<EOF
+versions=$(cat <<EOF
 9.12.2
 9.12.1
 9.10.2
 9.10.1
 9.8.4
 EOF
+)
 
 usage() {
   echo
   echo "Usage:"
   echo
-  echo "  bash <(curl -fsSL https://raw.githubusercontent.com/sol/ghc-hie-files/main/get.sh) [<ghc-version>]"
+  echo "  bash <(curl -fsSL https://raw.githubusercontent.com/$repo/main/get.sh) [<ghc-version>]"
   echo
   echo "If no version is specified, the version reported by \`ghc --numeric-version\` is used."
   echo
   echo "Available versions:"
   echo
-  printf '  %s\n' "${versions[@]}"
+  echo "$versions" | sed 's/^/  /'
   exit 1
 }
 
@@ -39,7 +40,7 @@ else
   usage
 fi
 
-if [[ ! " ${versions[*]} " =~ " $version " ]]; then
+if ! echo "$versions" | grep -qxF "$version"; then
   echo
   echo "Error: unknown version $version"
   usage
