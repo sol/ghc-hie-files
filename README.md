@@ -8,6 +8,7 @@ HIE files are extracted to `~/.local/state/ghc-hie-files/`.
 
 HIE files for boot libraries are available for GHC versions:
 
+- `9.14.1`
 - `9.12.2`
 - `9.12.1`
 - `9.10.3`
