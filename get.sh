@@ -9,6 +9,7 @@ dest="$HOME/.local/state/ghc-hie-files/"
 
 versions=$(cat <<EOF
 9.14.1
+9.12.4
 9.12.2
 9.12.1
 9.10.3
